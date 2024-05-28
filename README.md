@@ -76,7 +76,7 @@ The `prepare_iso.sh` script needs the `support` directory and its content. In ot
 
 ## Use with Packer
 
-The path can now be added to your Packer template or provided as [user variables](https://developer.hashicorp.com/packer/docs/templates/legacy_json_templates/user-variables). The `packer` directory contains a template that can be used with the `vmware-iso` and `virtualbox-iso` builders. The checksum does not need to be added because the `iso_checksum_type` has been set to "none". The `veewee` directory contains a definition, though as mentioned above it is not currently being maintained.
+The path can now be added to your Packer template or provided as [user variables](https://developer.hashicorp.com/packer/docs/templates/legacy_json_templates/user-variables). The `packer` directory contains a template that can be used with the `vmware-iso` and `virtualbox-iso` builders. The checksum needs to be added wih `iso_checksum` or set to "none". The `veewee` directory contains a definition, though as mentioned above it is not currently being maintained.
 
 The Packer template adds some additional VM options required for OS X guests. Note that the paths given in the Packer template's `iso_url` builder key accepts file paths, both absolute and relative (to the current working directory).
 
