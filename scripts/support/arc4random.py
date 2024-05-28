@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 '''py-arc4random
 
 Basic python 2.7/3 implementation of OpenBSDs arc4random PRNG.

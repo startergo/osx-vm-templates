@@ -63,7 +63,7 @@ Run the `prepare_iso.sh` script with two arguments: the path to an `Install OS X
 
 For example:
 
-`sudo prepare_iso/prepare_iso.sh -u admin -p password -i /path/to/image.jpg "/Applications/Install OS X Mountain Lion.app" out`
+`sudo prepare_iso/prepare_iso.sh "/Applications/Install OS X Mountain Lion.app" out -u admin -p password -i /path/to/image.jpg`
 
 Additionally, flags can be set to disable certain default configuration options.
 
@@ -85,7 +85,7 @@ Given the above output, we could run then run packer:
 ```sh
 cd packer
 packer build \
-  -var iso_url=../out/OSX_InstallESD_10.8.4_12E55.dmg \
+  -var 'iso_url=../out/OSX_InstallESD_10.8.4_12E55.dmg' \
   template.json
 ```
 
@@ -96,12 +96,21 @@ If you modified the name or password of the admin account in the `prepare_iso` s
 For example:
 
 ```
+packer build -var 'iso_url=../out/OSX_InstallESD_10.9.5_13F34.dmg' \
+-var 'username=admin' \
+-var 'password=password' \
+-var 'install_vagrant_keys=false' \
+-var 'autologin=true' \
+-var 'provisioning_delay=30' \
+-only=vmware-iso \
+template.json
+=======
 packer build \
-  -var iso_url=../out/OSX_InstallESD_10.8.4_12E55.dmg \
-  -var username=youruser \
-  -var password=yourpassword \
-  -var install_vagrant_keys=false \
-  template.json
+-var iso_url=../out/OSX_InstallESD_10.8.4_12E55.dmg \
+-var username=youruser \
+-var password=yourpassword \
+-var install_vagrant_keys=false \
+template.json
 ```
 
 ### Building to a device with more space
@@ -138,19 +147,19 @@ By default, the packer template does not install the Chef or Puppet configuratio
 To install the latest version of Chef:
 
 ```
-packer build -var chef_version=latest template.json
+packer build -var 'chef_version=latest' template.json
 ```
 
 To install the last version of Puppet Agent:
 
 ```
-packer build -var pupet_agent_version=latest template.json
+packer build -var 'pupet_agent_version=latest' template.json
 ```
 
 To install the last versions of the deprecated standalone Puppet, Facter and Hiera packages:
 
 ```
-packer build -var puppet_version=latest facter_version=latest hiera_version=latest template.json
+packer build -var 'puppet_version=latest' -var 'facter_version=latest' -var 'hiera_version=latest' template.json
 ```
 
 ## Xcode Command Line Tools
@@ -158,7 +167,7 @@ packer build -var puppet_version=latest facter_version=latest hiera_version=late
 The Xcode CLI tools are installed by the packer template by default. To disable the installation, set the `install_xcode_cli_tools` variable to `false`:
 
 ```
-packer build -var install_xcode_cli_tools=false template.json
+packer build -var 'install_xcode_cli_tools=false' template.json
 ```
 
 ## System updates
@@ -166,7 +175,7 @@ packer build -var install_xcode_cli_tools=false template.json
 Packer will instruct the system to download and install all available OS X updates, if you want to disable this default behaviour, use `update_system` variable:
 
 ```
-packer build -var update_system=0 template.json
+packer build -var 'update_system=0' template.json
 ```
 
 ## Provisioning delay
@@ -174,7 +183,7 @@ packer build -var update_system=0 template.json
 In some cases, it may be helpful to insert a delay into the beginning of the provisioning process. Adding a delay of about 30 seconds may help subsequent provisioning steps that install software from the internet complete successfully. By default, the delay is set to `0`, but you can change the delay by setting the `provisioning_delay` variable:
 
 ```
-packer build -var provisioning_delay=30 template.json`
+packer build -var 'provisioning_delay=30' template.json`
 ```
 
 ## VirtualBox support
@@ -236,8 +245,8 @@ Finally the virtualbox-ovf allows to use the previously generated exported virtu
 
 ```
 packer build \
-  -var provisioning_delay=30 \
-  -var source_path=macOS_10.12.ovf \
+  -var 'provisioning_delay=30' \
+  -var 'source_path=macOS_10.12.ovf' \
   template.json
 ```
 

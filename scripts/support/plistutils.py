@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 '''plist utility functions'''
 
 from Foundation import NSPropertyListSerialization

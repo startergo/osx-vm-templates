@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 '''Functions for generating ShadowHashData'''
 
 import hashlib
